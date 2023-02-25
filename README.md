@@ -2,7 +2,7 @@
 
 
 ## Nota:
-Mi repositorio es: 
+Mi repositorio es: https://github.com/JorgeCadrecha/Ejercicios_Tema5_TecnicasDeProgramacion.git
 
 ## Enunciado
 
