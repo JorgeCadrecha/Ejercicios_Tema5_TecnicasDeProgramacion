@@ -1,127 +1,126 @@
 import java.util.HashMap;
 import java.util.Scanner;
-import java.util.*;
 
 public class Ejercicio10 {
-    /*
-    10. Registro de Empleados
-Los empleados de una cierta compañía se representan en la base de datos de la compañía por su nombre,número de empleado y número de la seguridad social.Construir una estructura de tablas hash que permita acceder al registro de un empleado por cualquiera de estos tres datos.(Nota:No se dispone de memoria suficiente para duplicar los registros de los empleados).
-     */
 
-    private String nombre;
-    private int nEmpleados;
-    private int nSeguridadSocial;
+    private HashMap<String, Empleado> tablaNombres;
+    private HashMap<Integer, Empleado> tablaNumerosEmpleado;
+    private HashMap<Integer, Empleado> tablaNumerosSeguridadSocial;
 
-    public Ejercicio10(String nombre, int nEmpleados, int nSeguridadSocial) {
-        this.nombre = nombre;
-        this.nEmpleados = nEmpleados;
-        this.nSeguridadSocial = nSeguridadSocial;
+    public Ejercicio10() {
+        tablaNombres = new HashMap<>();
+        tablaNumerosEmpleado = new HashMap<>();
+        tablaNumerosSeguridadSocial = new HashMap<>();
     }
 
-    public String getNombre() {
-        return nombre;
+    public void agregarEmpleado(String nombre, int numeroEmpleado, int numeroSeguridadSocial) {
+        Empleado empleado = new Empleado(nombre, numeroEmpleado, numeroSeguridadSocial);
+        tablaNombres.put(nombre, empleado);
+        tablaNumerosEmpleado.put(numeroEmpleado, empleado);
+        tablaNumerosSeguridadSocial.put(numeroSeguridadSocial, empleado);
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public Empleado buscarPorNombre(String nombre) {
+        return tablaNombres.get(nombre);
     }
 
-    public int getnEmpleados() {
-        return nEmpleados;
+    public Empleado buscarPorNumeroEmpleado(int numeroEmpleado) {
+        return tablaNumerosEmpleado.get(numeroEmpleado);
     }
 
-    public void setnEmpleados(int nEmpleados) {
-        this.nEmpleados = nEmpleados;
+    public Empleado buscarPorNumeroSeguridadSocial(int numeroSeguridadSocial) {
+        return tablaNumerosSeguridadSocial.get(numeroSeguridadSocial);
     }
 
-    public int getnSeguridadSocial() {
-        return nSeguridadSocial;
-    }
+    private class Empleado {
+        private String nombre;
+        private int numeroEmpleado;
+        private int numeroSeguridadSocial;
 
-    public void setnSeguridadSocial(int nSeguridadSocial) {
-        this.nSeguridadSocial = nSeguridadSocial;
-    }
-
-    //public static void main(String[] args) {
-        /*final int TAMAÑO = 10;
-        String[] nombres = new String[TAMAÑO];
-        int[] nEmpleados = new int[TAMAÑO];
-        int[] nSeguridadSocial = new int[TAMAÑO];
-        int i;
-        for (i = 0; i < TAMAÑO; i++) {
-            nombres[i] = "Empleado " + i;
-            nEmpleados[i] = i;
-            nSeguridadSocial[i] = i;
-        }
-        System.out.println("¿Qué empleado quieres buscar?");
-        int nEmpleado = new Scanner(System.in).nextInt();
-        for (i = 0; i < TAMAÑO; i++) {
-            if (nEmpleados[i] == nEmpleado) {
-                System.out.println("Nombre: " + nombres[i]);
-                System.out.println("Número de empleado: " + nEmpleados[i]);
-                System.out.println("Número de la seguridad social: " + nSeguridadSocial[i]);
-            }
+        public Empleado(String nombre, int numeroEmpleado, int numeroSeguridadSocial) {
+            this.nombre = nombre;
+            this.numeroEmpleado = numeroEmpleado;
+            this.numeroSeguridadSocial = numeroSeguridadSocial;
         }
 
-        */
+        public String getNombre() {
+            return nombre;
+        }
 
+        public int getNumeroEmpleado() {
+            return numeroEmpleado;
+        }
 
+        public int getNumeroSeguridadSocial() {
+            return numeroSeguridadSocial;
+        }
+    }
 
-            public static void main(String[] args) {
-                Scanner sc = new Scanner(System.in);
-                HashMap<String, String> empleados = new HashMap<String, String>();
-                String nombre, numEmpleado, numSeguridadSocial;
-                int opcion;
-                do {
-                    System.out.println("1. Añadir empleado");
-                    System.out.println("2. Buscar empleado");
-                    System.out.println("3. Salir");
-                    opcion = sc.nextInt();
-                    switch (opcion) {
+    public static void main(String[] args) {
+        Ejercicio10 registro = new Ejercicio10();
+        Scanner sc = new Scanner(System.in);
+
+        String nombre;
+        int numEmpleado, numSeguridadSocial;
+        int opcion;
+        do {
+            System.out.println("1. Añadir empleado");
+            System.out.println("2. Buscar empleado");
+            System.out.println("3. Salir");
+            opcion = sc.nextInt();
+            switch (opcion) {
+                case 1:
+                    System.out.println("Nombre: ");
+                    nombre = sc.next();
+                    System.out.println("Número de empleado: ");
+                    numEmpleado = sc.nextInt();
+                    System.out.println("Número de seguridad social: ");
+                    numSeguridadSocial = sc.nextInt();
+
+                    registro.agregarEmpleado(nombre,numEmpleado,numSeguridadSocial);
+                    break;
+                case 2:
+                    System.out.println("1. Buscar por nombre");
+                    System.out.println("2. Buscar por número de empleado");
+                    System.out.println("3. Buscar por número de seguridad social");
+                    int opcion2;
+                    opcion2 = sc.nextInt();
+                    switch (opcion2){
                         case 1:
                             System.out.println("Nombre: ");
                             nombre = sc.next();
-                            System.out.println("Número de empleado: ");
-                            numEmpleado = sc.next();
-                            System.out.println("Número de seguridad social: ");
-                            numSeguridadSocial = sc.next();
+                            Empleado empleado = registro.buscarPorNombre(nombre);
+                            System.out.println("Empleado encontrado por nombre: " + empleado.getNombre() + ", " + empleado.getNumeroEmpleado() + ", " + empleado.getNumeroSeguridadSocial());
 
-                            empleados.put(nombre + numEmpleado + numSeguridadSocial, "Nombre:" + nombre + "\nNúmero de Empleado: "+  numEmpleado + "\nNúmero de Seguridad Social: " + numSeguridadSocial);
                             break;
+
                         case 2:
-                            System.out.println("1. Buscar por nombre");
-                            System.out.println("2. Buscar por número de empleado");
-                            System.out.println("3. Buscar por número de seguridad social");
-                            int opcion2;
-                            opcion2 = sc.nextInt();
-                            switch (opcion2){
-                                case 1:
-                                    System.out.println("Nombre: ");
-                                    nombre = sc.next();
-                                    System.out.println(empleados.get(nombre));
-                                    break;
-
-                                case 2:
-                                    System.out.println("Número de Empleado: ");
-                                    numEmpleado = sc.next();
-                                    System.out.println(empleados.get(numEmpleado));
-                                    break;
-                                case 3:
-                                    System.out.println("Número de Seguridad Social: ");
-                                    numSeguridadSocial = sc.next();
-                                    System.out.println(empleados.get(numSeguridadSocial));
-                                    break;
-
-                            }
-
+                            System.out.println("Número de Empleado: ");
+                            numEmpleado = sc.nextInt();
+                            empleado = registro.buscarPorNumeroEmpleado(numEmpleado);
+                            System.out.println("Empleado encontrado por número de empleado: " + empleado.getNombre() + ", " + empleado.getNumeroEmpleado() + ", " + empleado.getNumeroSeguridadSocial());
                             break;
                         case 3:
-                            System.out.println("Adios");
+                            System.out.println("Número de Seguridad Social: ");
+                            numSeguridadSocial = sc.nextInt();
+                            empleado = registro.buscarPorNumeroSeguridadSocial(numSeguridadSocial);
+                            System.out.println("Empleado encontrado por número de seguridad social: " + empleado.getNombre() + ", " + empleado.getNumeroEmpleado() + ", " + empleado.getNumeroSeguridadSocial());
+
                             break;
                         default:
                             System.out.println("Opción incorrecta");
                             break;
                     }
-                } while (opcion != 3);
+
+                    break;
+                case 3:
+                    System.out.println("Adios");
+                    break;
+                default:
+                    System.out.println("Opción incorrecta");
+                    break;
             }
-        }
+        } while (opcion != 3);
+    }
+}
+
